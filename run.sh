@@ -10,5 +10,6 @@ pip install --upgrade pip
 pip install -r requirements.txt
 
 # run
-python Module.py
+# python Module.py
+python Inference.py
 
