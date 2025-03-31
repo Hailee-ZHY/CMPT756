@@ -3,20 +3,20 @@ import os
 import argparse
 
 class inference():
-    def __init__(self, model_path = "yolo_finetune_output/coco128_experiment/weights/best.pt", inference_dir= "datasets/coco128/images/inference", output_dir="inference_results"):
+    def __init__(self, model_path = "yolo_finetune_output/coco128_experiment/weights/best.pt", output_dir="inference_results"):
 
         self.model_path= model_path
-        self.inference_dir = inference_dir
+        # self.inference_dir = inference_dir
         self.output_dir=output_dir
 
-    def yolo_inference(self, imgsz, conf, iou, save, save_txt, save_conf, project, name):
+    def yolo_inference(self, inference_dir, imgsz, conf, iou, save, save_txt, save_conf, project, name):
         # load model 
         model = YOLO(self.model_path)
         os.makedirs(self.output_dir, exist_ok=True)
 
         # inference and save results 
         results = model(
-            source=self.inference_dir,  # single pic / folder
+            source=inference_dir,  # single pic / folder
             imgsz=imgsz,
             conf=conf,              
             iou=iou,               
@@ -32,6 +32,7 @@ class inference():
 if __name__ == "__main__":
     output_dir="inference_results"
     parse = argparse.ArgumentParser()
+    parse.add_argument("--inference_dir", type = str, default=  "datasets/coco128/images/inference") ## 这里是coco128的数据
     parse.add_argument("--imgsz", type = int, default=640)
     parse.add_argument("--conf", type = float, default=0.25)
     parse.add_argument("--iou", type = float, default=0.45)
@@ -43,4 +44,4 @@ if __name__ == "__main__":
     args = parse.parse_args()
 
     inference = inference()
-    inference.yolo_inference(args.imgsz, args.conf, args.iou, args.save, args.save_txt, args.save_conf, args.project, args.name)
+    inference.yolo_inference(args.inference_dir, args.imgsz, args.conf, args.iou, args.save, args.save_txt, args.save_conf, args.project, args.name)
