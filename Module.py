@@ -10,15 +10,12 @@ import random
 import shutil
 
 import torch
-import torchvision
 from ultralytics import YOLO
 import albumentations as A 
 from albumentations.pytorch import ToTensorV2
 from torch.utils.data import Dataset
-import cv2
 from torch.utils.data import DataLoader
 from ultralytics.engine.trainer import BaseTrainer
-
 
 # Create Dic
 data_path = "datasets/coco128"
@@ -76,53 +73,6 @@ with open(yaml_path, "w") as f:
     f.write(yaml_content)
 print(f"coco config file has ben succesfully created. path: {full_path}")
 
-# # add data augmentation
-# transform = A.Compose([
-#     A.RandomBrightnessContrast(p = 0.2), 
-#     A.GaussianBlur(p=0.1), 
-#     A.ToGray(p = 0.05), 
-#     A.RandomResizedCrop(size = (640,640), scale = (0.5, 1.0), p = 0.3), 
-#     ToTensorV2(), 
-# ])
-
-# class augmentationYOLO(Dataset):
-#     def __init__(self, img_dir, labels_dir, transform = None):
-#         self.transform = transform
-#         self.img_dir = img_dir
-#         self.labels_dir = labels_dir
-#         self.image_files = [f for f in os.listdir(img_dir) if f.endswith(".jpg")]
-    
-#     def __len__(self):
-#         return len(self.image_files)
-
-#     def __getitem__(self,index):
-#         img_path = os.path.join(self.img_dir, self.image_files[index])
-#         img = cv2.imread(img_path)
-#         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
-
-#         label_path = os.path.join(self.labels_dir, self.image_files[index].replace(".jpg", ".txt"))
-#         with open(label_path, "r") as f:
-#             label = f.readlines()
-
-#         if self.transform:
-#             augmented = self.transform(image=img)
-#             img = augmented["image"]
-#             img = torch.tensor(img, dtype=torch.float32)
-
-#         return img, label
-    
-# class Customtrainer(BaseTrainer):
-#     def get_dataloader(self, dataset_path, batch_size=16, mode="train"):
-#         return DataLoader(
-#             augmentationYOLO(
-#                 img_dir=dataset_path, 
-#                 labels_dir="datasets/coco128/labels/train2017", 
-#                 transform=transform
-#             ), 
-#             batch_size=batch_size, 
-#             shuffle = True
-#         )
-
 # Fine-tune process
 print("starting YOLO Fine-tune ...")
 model = YOLO("yolov8n.pt")
@@ -133,6 +83,8 @@ model.train(
     batch = 8, 
     device = "mps" if torch.backends.mps.is_available() else "cpu", 
     # trainer=Customtrainer,
+    project = "yolo_finetune_output",
+    name = "coco128_experiment"
 )
 print("YOLOv8 fine-tune completed.")
 
