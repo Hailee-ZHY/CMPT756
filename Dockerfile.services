@@ -1,0 +1,29 @@
+# Use the official lightweight Python image
+# https://hub.docker.com/_/python
+FROM python:3.10-slim
+
+# Allow statements and log messages to immediately appear in the Knative logs
+ENV PYTHONUNBUFFERED True
+
+# Set working direction
+WORKDIR /CMPT756
+
+# Copy local code to the container image.
+COPY . ./
+
+# Install required system dependencies for YOLO and OpenCV
+RUN apt update && apt install -y \
+    libgl1 libglib2.0-0 wget unzip && \
+    rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip and install project dependencies
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose port 8080 for Cloud Run
+EXPOSE 8080
+
+# Run the web service on container startup using gunicorn
+# 1 worker, 8 threads, bind to $PORT, no timeout limit
+# default port is 8080
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 Inference:app
