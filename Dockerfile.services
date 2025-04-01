@@ -27,4 +27,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 ENV ip=0.0.0.0
 ENV PORT=8080
 
-CMD gunicorn --bind ${ip}:${PORT} --workers 1 --threads 8 --timeout 0 Inference:app
+CMD gunicorn --bind ${ip}:${PORT} --workers 1 --threads 8 --timeout 0 yolo_inference_api:app
