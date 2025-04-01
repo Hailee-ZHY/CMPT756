@@ -1,14 +1,19 @@
 albucore==0.0.23
 albumentations==2.0.5
 annotated-types==0.7.0
+blinker==1.9.0
 certifi==2025.1.31
 charset-normalizer==3.4.1
+click==8.1.8
 contourpy==1.3.1
 cycler==0.12.1
 filelock==3.17.0
+Flask==3.1.0
 fonttools==4.56.0
 fsspec==2025.3.0
+gunicorn @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_50qkos1tcu/croot/gunicorn_1720002510662/work
 idna==3.10
+itsdangerous==2.2.0
 Jinja2==3.1.6
 kiwisolver==1.4.8
 MarkupSafe==3.0.2
@@ -18,7 +23,7 @@ networkx==3.4.2
 numpy==1.26.4
 opencv-python==4.11.0.86
 opencv-python-headless==4.11.0.86
-packaging==24.2
+packaging @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_15t4xe1fp0/croot/packaging_1734472125760/work
 pandas==2.2.3
 pillow==11.1.0
 psutil==7.0.0
@@ -44,3 +49,4 @@ tzdata==2025.1
 ultralytics==8.3.86
 ultralytics-thop==2.0.14
 urllib3==2.3.0
+Werkzeug==3.1.3
