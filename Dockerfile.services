@@ -20,10 +20,10 @@ RUN apt update && apt install -y \
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port 8080 for Cloud Run
-EXPOSE 8080
-
 # Run the web service on container startup using gunicorn
 # 1 worker, 8 threads, bind to $PORT, no timeout limit
 # default port is 8080
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 Inference:app
+ENV ip=0.0.0.0
+ENV PORT=8080
+
+CMD gunicorn --bind ${ip}:${PORT} --workers 1 --threads 8 --timeout 0 Inference:app
