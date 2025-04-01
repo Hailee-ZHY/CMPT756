@@ -11,7 +11,6 @@ filelock==3.17.0
 Flask==3.1.0
 fonttools==4.56.0
 fsspec==2025.3.0
-gunicorn @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_50qkos1tcu/croot/gunicorn_1720002510662/work
 idna==3.10
 itsdangerous==2.2.0
 Jinja2==3.1.6
@@ -23,7 +22,6 @@ networkx==3.4.2
 numpy==1.26.4
 opencv-python==4.11.0.86
 opencv-python-headless==4.11.0.86
-packaging @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_15t4xe1fp0/croot/packaging_1734472125760/work
 pandas==2.2.3
 pillow==11.1.0
 psutil==7.0.0
