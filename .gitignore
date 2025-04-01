@@ -1,3 +1,4 @@
 datasets/
 inference_results/
 yolov8n.pt
+run.sh

@@ -11,5 +11,5 @@ pip install -r requirements.txt
 
 # run
 # python Module.py
-python Inference.py
+# python Inference.py
 
