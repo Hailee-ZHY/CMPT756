@@ -1,9 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from ultralytics import YOLO
 import cv2
 import numpy as np 
 import os 
 import uuid
+import io
 
 app = Flask(__name__)
 model = YOLO("yolo_finetune_output/coco128_experiment/weights/best.pt")
@@ -24,9 +25,17 @@ def predict():
 
         # run inference 
         results = model(img, imgsz = 640, conf = 0.25, iou = 0.45)
-        result_json = results[0].tojson()
+        # result_json = results[0].tojson()
 
-        return jsonify({"predictions": result_json})
+        # get result with bb
+        img_with_boxes = results[0].plot()
+        
+        # encode into JPEG 
+        _, buffer = cv2.imencode(".jpg", img_with_boxes)
+        img_bytes = io.BytesIO(buffer)
+
+        # return jsonify({"predictions": result_json})
+        return send_file(img_bytes, mimetype = "image/jpeg", as_attachment=False)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
