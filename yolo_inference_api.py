@@ -18,7 +18,7 @@ model = YOLO("yolo_finetune_output/coco128_experiment/weights/best.pt")
 def predict_from_url():
     try:
         data = request.get_json()
-        urls = data.get("url")
+        urls = data.get("urls")
 
         if not url or not isinstance(urls, list):
             return jsonify({"error": "No URL provided"}), 400
