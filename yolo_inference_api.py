@@ -152,4 +152,5 @@ def predict_from_local():
     return send_file(return_data, mimetype='application/zip', as_attachment=True, download_name=f"yolo_results_{timestamp}.zip")
 
 if __name__ == "__main__":
-    app.run(host = "0.0.0.0", port = 8080) # 如果要部署到云端给别人访问，host = 0.0.0.0
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host = "0.0.0.0", port = port) # 如果要部署到云端给别人访问，host = 0.0.0.0
