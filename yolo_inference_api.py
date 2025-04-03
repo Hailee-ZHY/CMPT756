@@ -20,7 +20,7 @@ def predict_from_url():
         data = request.get_json()
         urls = data.get("urls")
 
-        if not url or not isinstance(urls, list):
+        if not urls or not isinstance(urls, list):
             return jsonify({"error": "No URL provided"}), 400
 
         # Prepare temp output folder
