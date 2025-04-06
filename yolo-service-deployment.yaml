@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yolo-service
+  namespace: gke-yolo-namespace
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: yolo-service
+  template:
+    metadata:
+      labels:
+        app: yolo-service
+    spec:
+      containers:
+        - name: yolo-container
+          image: gcr.io/final-project-453122/yolo-api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TRITON_URL
+              value: "http://triton-service.gke-yolo-namespace.svc.cluster.local:8000"
