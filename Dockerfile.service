@@ -22,10 +22,10 @@ RUN pip install gunicorn
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Run the web service on container startup using gunicorn
-# 1 worker, 8 threads, bind to $PORT, no timeout limit
+# 1 worker, 2 threads, bind to $PORT, no timeout limit
 # default port is 8080
 ENV ip=0.0.0.0
 ENV PORT=8080
 
-CMD ["sh", "-c", "gunicorn --bind ${ip}:${PORT} --workers 1 --threads 8 --timeout 0 yolo_inference_api:app"]
+CMD ["sh", "-c", "gunicorn --bind ${ip}:${PORT} --workers 1 --threads 2 --timeout 0 yolo_inference_api:app"]
 
