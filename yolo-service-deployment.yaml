@@ -4,7 +4,6 @@ metadata:
   name: yolo-service
   namespace: gke-yolo-namespace
 spec:
-  replicas: 4
   selector:
     matchLabels:
       app: yolo-service
@@ -22,3 +21,25 @@ spec:
           env:
             - name: TRITON_URL
               value: "http://triton-service.gke-yolo-namespace.svc.cluster.local:8000"
+
+---
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: yolo-hpa
+  namespace: gke-yolo-namespace
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: yolo-service
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
